@@ -1,2 +1,19 @@
 @import "tailwindcss";
 @variant dark (&:where(.dark, .dark *));
+
+/* Global Dropdown & Option High-Contrast Visibility Fix */
+select {
+  color-scheme: light dark;
+}
+
+select option {
+  background-color: #ffffff;
+  color: #083067;
+  padding: 8px 12px;
+}
+
+.dark select option {
+  background-color: #162636;
+  color: #ffffff;
+  padding: 8px 12px;
+}

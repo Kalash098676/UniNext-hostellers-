@@ -277,7 +277,7 @@ export default function Staff() {
                     className="w-full text-xs p-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#162636] text-[#083067] dark:text-white focus:ring-1 focus:ring-[#083067] focus:outline-none"
                   >
                     {DEPARTMENTS.map((d) => (
-                      <option key={d} value={d}>{d}</option>
+                      <option key={d} value={d} className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">{d}</option>
                     ))}
                   </select>
                 </div>
@@ -292,7 +292,7 @@ export default function Staff() {
                     className="w-full text-xs p-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#162636] text-[#083067] dark:text-white focus:ring-1 focus:ring-[#083067] focus:outline-none"
                   >
                     {SHIFTS.map((s) => (
-                      <option key={s} value={s}>{s}</option>
+                      <option key={s} value={s} className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">{s}</option>
                     ))}
                   </select>
                 </div>
@@ -308,7 +308,7 @@ export default function Staff() {
                   className="w-full text-xs p-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#162636] text-[#083067] dark:text-white focus:ring-1 focus:ring-[#083067] focus:outline-none"
                 >
                   {HOSTEL_TYPES.map((h) => (
-                    <option key={h} value={h}>{h.replace("_", " ")}</option>
+                    <option key={h} value={h} className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">{h.replace("_", " ")}</option>
                   ))}
                 </select>
               </div>

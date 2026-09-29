@@ -124,7 +124,7 @@ export default function ManageMenu() {
            className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-white/5 text-sm text-[#083067] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#083067]/20 placeholder-gray-300 dark:placeholder-gray-600"
           >
             {DAYS.map((day) => (
-              <option key={day} value={day}>
+              <option key={day} value={day} className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">
                 {day.charAt(0) + day.slice(1).toLowerCase()}
               </option>
             ))}

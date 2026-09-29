@@ -135,11 +135,11 @@ export default function VisitorPasses() {
           onChange={(e) => setFilterStatus(e.target.value)}
           className="px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-lg text-sm bg-gray-50 dark:bg-[#0F1F2E] dark:text-white"
         >
-          <option value="ALL">All Statuses</option>
-          <option value="PENDING">Pending Approval</option>
-          <option value="APPROVED">Approved</option>
-          <option value="REJECTED">Rejected</option>
-          <option value="EXPIRED">Expired</option>
+          <option value="ALL" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">All Statuses</option>
+          <option value="PENDING" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Pending Approval</option>
+          <option value="APPROVED" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Approved</option>
+          <option value="REJECTED" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Rejected</option>
+          <option value="EXPIRED" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Expired</option>
         </select>
       </div>
 
@@ -246,9 +246,9 @@ export default function VisitorPasses() {
                   onChange={(e) => setNewPass({ ...newPass, studentId: e.target.value })}
                   className="w-full p-2.5 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-[#0F1F2E] dark:text-white"
                 >
-                  <option value="">-- Select Registered Student --</option>
+                  <option value="" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">-- Select Registered Student --</option>
                   {students.map((s) => (
-                    <option key={s.id} value={s.id}>
+                    <option key={s.id} value={s.id} className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">
                       {s.name} ({s.email}) — Room: {s.room}
                     </option>
                   ))}

@@ -74,10 +74,10 @@ export default function WardenNotifications() {
                 onChange={(e) => setType(e.target.value)}
                 className="w-full p-2.5 border border-gray-300 dark:border-gray-700 rounded-lg text-sm dark:bg-[#0F1F2E] dark:text-white"
               >
-                <option value="GENERAL">📢 General Announcement</option>
-                <option value="COMPLAINT">🛠️ Maintenance Update</option>
-                <option value="MATCH">🤝 Roommate Update</option>
-                <option value="ALERT">🚨 Security Alert</option>
+                <option value="GENERAL" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">📢 General Announcement</option>
+                <option value="COMPLAINT" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">🛠️ Maintenance Update</option>
+                <option value="MATCH" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">🤝 Roommate Update</option>
+                <option value="ALERT" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">🚨 Security Alert</option>
               </select>
             </div>
           </div>

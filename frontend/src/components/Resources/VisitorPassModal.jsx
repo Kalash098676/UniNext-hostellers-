@@ -291,12 +291,12 @@ export default function VisitorPassModal({ isOpen, onClose }) {
                     onChange={(e) => setFormData({ ...formData, relation: e.target.value })}
                     className="w-full text-xs p-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#162636] focus:ring-1 focus:ring-[#083067] focus:outline-none"
                   >
-                    <option value="Parent">Parent (Father / Mother)</option>
-                    <option value="Guardian">Legal Guardian</option>
-                    <option value="Sibling">Sibling (Brother / Sister)</option>
-                    <option value="Relative">Relative</option>
-                    <option value="Friend">Friend / Classmate</option>
-                    <option value="Official">Official / Vendor</option>
+                    <option value="Parent" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Parent (Father / Mother)</option>
+                    <option value="Guardian" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Legal Guardian</option>
+                    <option value="Sibling" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Sibling (Brother / Sister)</option>
+                    <option value="Relative" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Relative</option>
+                    <option value="Friend" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Friend / Classmate</option>
+                    <option value="Official" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Official / Vendor</option>
                   </select>
                 </div>
               </div>

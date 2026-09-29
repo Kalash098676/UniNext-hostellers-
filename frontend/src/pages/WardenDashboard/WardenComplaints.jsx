@@ -350,11 +350,11 @@ const WardenComplaints = () => {
                       status: e.target.value,
                     })
                   }
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-white/5 text-sm text-[#083067] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#083067]/30"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0F1F2E] text-sm text-[#083067] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#083067]/30"
                 >
-                  <option value="PENDING">Pending</option>
-                  <option value="IN_PROGRESS">In Progress</option>
-                  <option value="RESOLVED">Resolved</option>
+                  <option value="PENDING" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Pending</option>
+                  <option value="IN_PROGRESS" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">In Progress</option>
+                  <option value="RESOLVED" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Resolved</option>
                 </select>
               </div>
 
@@ -371,11 +371,11 @@ const WardenComplaints = () => {
                       priority: e.target.value,
                     })
                   }
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-white/5 text-sm text-[#083067] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#083067]/30"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0F1F2E] text-sm text-[#083067] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#083067]/30"
                 >
-                  <option value="LOW">Low</option>
-                  <option value="MEDIUM">Medium</option>
-                  <option value="HIGH">High</option>
+                  <option value="LOW" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Low</option>
+                  <option value="MEDIUM" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Medium</option>
+                  <option value="HIGH" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">High</option>
                 </select>
               </div>
 
