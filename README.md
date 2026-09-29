@@ -476,24 +476,28 @@ Base URL: `http://localhost:8080` (or deployed server URL)
 
 ### 1. Public Landing Page & Features
 ![Landing Page](frontend/public/student_accomodation1.png)
+
 *Figure 1: UniNest Public Portal featuring hero animation, feature cards, and responsive navigation.*
 
 ---
 
 ### 2. Student Overview & Quick Resources
 ![Student Overview](frontend/public/simplifiedhostellife.png)
+
 *Figure 2: Student Dashboard displaying complaint counters, mess schedule, visitor pass trigger, and meal feedback.*
 
 ---
 
 ### 3. Intelligent Roommate Matching
 ![Roommate Matching](frontend/public/roommatematch.png)
+
 *Figure 3: Roommate Matching module showing preference survey results and compatibility scoring.*
 
 ---
 
 ### 4. Complaint Management & Issue Tracking
 ![Complaint Tracking](frontend/public/issuereporting.png)
+
 *Figure 4: Maintenance complaint portal with status tracking and warden update modal.*
 
 ---
