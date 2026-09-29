@@ -289,22 +289,22 @@ export default function Matches() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="bg-gray-50 dark:bg-[#0F1F2E] border border-gray-200 dark:border-gray-600 text-xs font-semibold text-gray-800 dark:text-gray-200 rounded-xl px-3 py-2 focus:outline-none"
+            className="bg-gray-50 dark:bg-[#243B50] border border-gray-200 dark:border-[#3B5368] text-xs font-semibold text-gray-800 dark:text-white rounded-xl px-3 py-2 focus:outline-none"
           >
-            <option value="ALL" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">All Statuses ({totalMatches})</option>
-            <option value="CONFIRMED" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Confirmed ({confirmed.length})</option>
-            <option value="COMPLETE" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Awaiting Room ({complete.length})</option>
-            <option value="INCOMPLETE" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Incomplete ({incomplete.length})</option>
+            <option value="ALL" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">All Statuses ({totalMatches})</option>
+            <option value="CONFIRMED" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">Confirmed ({confirmed.length})</option>
+            <option value="COMPLETE" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">Awaiting Room ({complete.length})</option>
+            <option value="INCOMPLETE" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">Incomplete ({incomplete.length})</option>
           </select>
 
           <select
             value={hostelFilter}
             onChange={(e) => setHostelFilter(e.target.value)}
-            className="bg-gray-50 dark:bg-[#0F1F2E] border border-gray-200 dark:border-gray-600 text-xs font-semibold text-gray-800 dark:text-gray-200 rounded-xl px-3 py-2 focus:outline-none"
+            className="bg-gray-50 dark:bg-[#243B50] border border-gray-200 dark:border-[#3B5368] text-xs font-semibold text-gray-800 dark:text-white rounded-xl px-3 py-2 focus:outline-none"
           >
-            <option value="ALL" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">All Hostels</option>
-            <option value="BOYS_HOSTEL" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Boys Hostel</option>
-            <option value="GIRLS_HOSTEL" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Girls Hostel</option>
+            <option value="ALL" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">All Hostels</option>
+            <option value="BOYS_HOSTEL" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">Boys Hostel</option>
+            <option value="GIRLS_HOSTEL" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">Girls Hostel</option>
           </select>
         </div>
       </div>
@@ -481,11 +481,11 @@ export default function Matches() {
             <select
               value={selectedStudentId}
               onChange={(e) => setSelectedStudentId(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-[#0F1F2E] text-xs text-[#083067] dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 mb-5"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-[#3B5368] bg-gray-50 dark:bg-[#243B50] text-xs text-[#083067] dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 mb-5 font-medium"
             >
-              <option value="" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Select student...</option>
+              <option value="" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">Select student...</option>
               {unmatchedStudents.map((s) => (
-                <option key={s.id} value={s.id} className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">
+                <option key={s.id} value={s.id} className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">
                   {s.name} ({s.email})
                 </option>
               ))}

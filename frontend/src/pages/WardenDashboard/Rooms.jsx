@@ -143,21 +143,21 @@ export default function Rooms() {
           <select
             value={filterBlock}
             onChange={(e) => setFilterBlock(e.target.value)}
-            className="px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-lg text-sm bg-gray-50 dark:bg-[#0F1F2E] dark:text-white"
+            className="px-3 py-2 border border-gray-200 dark:border-[#3B5368] rounded-xl text-sm bg-gray-50 dark:bg-[#243B50] dark:text-white font-medium"
           >
-            <option value="ALL">All Blocks</option>
-            <option value="A">Block A</option>
-            <option value="B">Block B</option>
-            <option value="C">Block C</option>
-            <option value="D">Block D</option>
+            <option value="ALL" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">All Blocks</option>
+            <option value="A" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">Block A</option>
+            <option value="B" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">Block B</option>
+            <option value="C" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">Block C</option>
+            <option value="D" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">Block D</option>
           </select>
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-lg text-sm bg-gray-50 dark:bg-[#0F1F2E] dark:text-white"
+            className="px-3 py-2 border border-gray-200 dark:border-[#3B5368] rounded-xl text-sm bg-gray-50 dark:bg-[#243B50] dark:text-white font-medium"
           >
-            <option value="ALL">All Status</option>
-            <option value="AVAILABLE">Available</option>
+            <option value="ALL" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">All Status</option>
+            <option value="AVAILABLE" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">Available</option>
             <option value="FULL">Full</option>
             <option value="MAINTENANCE">Maintenance</option>
           </select>
@@ -340,11 +340,11 @@ export default function Rooms() {
                   required
                   value={allocation.studentId}
                   onChange={(e) => setAllocation({ ...allocation, studentId: e.target.value })}
-                  className="w-full p-2.5 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-[#0F1F2E] dark:text-white"
+                  className="w-full p-2.5 border border-gray-300 dark:border-[#3B5368] rounded-xl dark:bg-[#243B50] dark:text-white font-medium"
                 >
-                  <option value="">-- Choose Registered Student --</option>
+                  <option value="" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">-- Choose Registered Student --</option>
                   {students.map((s) => (
-                    <option key={s.id} value={s.id}>
+                    <option key={s.id} value={s.id} className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">
                       {s.name} ({s.email}) — Current: {s.room}
                     </option>
                   ))}
@@ -357,11 +357,11 @@ export default function Rooms() {
                   required
                   value={allocation.roomNumber}
                   onChange={(e) => setAllocation({ ...allocation, roomNumber: e.target.value })}
-                  className="w-full p-2.5 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-[#0F1F2E] dark:text-white"
+                  className="w-full p-2.5 border border-gray-300 dark:border-[#3B5368] rounded-xl dark:bg-[#243B50] dark:text-white font-medium"
                 >
-                  <option value="">-- Choose Available Room --</option>
+                  <option value="" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">-- Choose Available Room --</option>
                   {rooms.map((r) => (
-                    <option key={r.id} value={r.roomNumber} disabled={r.occupiedBeds >= r.capacity}>
+                    <option key={r.id} value={r.roomNumber} disabled={r.occupiedBeds >= r.capacity} className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">
                       Room {r.roomNumber} (Block {r.block}) — {r.occupiedBeds}/{r.capacity} occupied
                     </option>
                   ))}

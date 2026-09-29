@@ -243,9 +243,9 @@ export default function Profile() {
                   <select
                     value={branch}
                     onChange={(e) => setBranch(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-white/5 text-sm text-[#083067] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#083067]/20"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-[#3B5368] bg-white dark:bg-[#243B50] text-sm text-[#083067] dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 font-medium"
                   >
-                    <option value="">Select Branch</option>
+                    <option value="" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">Select Branch</option>
                     {[
                       "Computer Science",
                       "Information Technology",
@@ -255,7 +255,7 @@ export default function Profile() {
                       "Chemical",
                       "Other",
                     ].map((b) => (
-                      <option key={b} value={b}>
+                      <option key={b} value={b} className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">
                         {b}
                       </option>
                     ))}
@@ -268,12 +268,12 @@ export default function Profile() {
                   <select
                     value={year}
                     onChange={(e) => setYear(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-white/5 text-sm text-[#083067] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#083067]/20"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-[#3B5368] bg-white dark:bg-[#243B50] text-sm text-[#083067] dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 font-medium"
                   >
-                    <option value="">Select Year</option>
+                    <option value="" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">Select Year</option>
                     {["1st Year", "2nd Year", "3rd Year", "4th Year"].map(
                       (y, i) => (
-                        <option key={y} value={i + 1}>
+                        <option key={y} value={i + 1} className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">
                           {y}
                         </option>
                       ),

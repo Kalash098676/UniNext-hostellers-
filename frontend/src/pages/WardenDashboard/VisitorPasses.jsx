@@ -133,13 +133,13 @@ export default function VisitorPasses() {
         <select
           value={filterStatus}
           onChange={(e) => setFilterStatus(e.target.value)}
-          className="px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-lg text-sm bg-gray-50 dark:bg-[#0F1F2E] dark:text-white"
+          className="px-3 py-2 border border-gray-200 dark:border-[#3B5368] rounded-xl text-sm bg-gray-50 dark:bg-[#243B50] dark:text-white font-medium"
         >
-          <option value="ALL" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">All Statuses</option>
-          <option value="PENDING" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Pending Approval</option>
-          <option value="APPROVED" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Approved</option>
-          <option value="REJECTED" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Rejected</option>
-          <option value="EXPIRED" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">Expired</option>
+          <option value="ALL" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">All Statuses</option>
+          <option value="PENDING" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">Pending Approval</option>
+          <option value="APPROVED" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">Approved</option>
+          <option value="REJECTED" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">Rejected</option>
+          <option value="EXPIRED" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">Expired</option>
         </select>
       </div>
 
@@ -244,11 +244,11 @@ export default function VisitorPasses() {
                   required
                   value={newPass.studentId}
                   onChange={(e) => setNewPass({ ...newPass, studentId: e.target.value })}
-                  className="w-full p-2.5 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-[#0F1F2E] dark:text-white"
+                  className="w-full p-2.5 border border-gray-300 dark:border-[#3B5368] rounded-xl dark:bg-[#243B50] dark:text-white font-medium"
                 >
-                  <option value="" className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">-- Select Registered Student --</option>
+                  <option value="" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">-- Select Registered Student --</option>
                   {students.map((s) => (
-                    <option key={s.id} value={s.id} className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">
+                    <option key={s.id} value={s.id} className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">
                       {s.name} ({s.email}) — Room: {s.room}
                     </option>
                   ))}

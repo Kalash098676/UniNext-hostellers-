@@ -360,11 +360,11 @@ const Preferences = () => {
                 <select
                   value={allergy}
                   onChange={(e) => setAllergy(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-white/5 text-sm text-[#083067] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#083067]/30"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-[#3B5368] bg-gray-50 dark:bg-[#243B50] text-sm text-[#083067] dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 font-medium"
                 >
-                  <option value="">Select...</option>
+                  <option value="" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">Select...</option>
                   {ALLERGY_OPTIONS.map((opt) => (
-                    <option key={opt.value} value={opt.value}>
+                    <option key={opt.value} value={opt.value} className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">
                       {opt.label}
                     </option>
                   ))}

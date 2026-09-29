@@ -274,10 +274,10 @@ export default function Staff() {
                   <select
                     value={formData.dept}
                     onChange={(e) => setFormData({ ...formData, dept: e.target.value })}
-                    className="w-full text-xs p-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#162636] text-[#083067] dark:text-white focus:ring-1 focus:ring-[#083067] focus:outline-none"
+                    className="w-full text-xs p-2.5 rounded-xl border border-gray-200 dark:border-[#3B5368] bg-gray-50 dark:bg-[#243B50] text-[#083067] dark:text-white focus:ring-1 focus:ring-blue-500 focus:outline-none font-medium"
                   >
                     {DEPARTMENTS.map((d) => (
-                      <option key={d} value={d} className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">{d}</option>
+                      <option key={d} value={d} className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">{d}</option>
                     ))}
                   </select>
                 </div>
@@ -289,10 +289,10 @@ export default function Staff() {
                   <select
                     value={formData.shift}
                     onChange={(e) => setFormData({ ...formData, shift: e.target.value })}
-                    className="w-full text-xs p-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#162636] text-[#083067] dark:text-white focus:ring-1 focus:ring-[#083067] focus:outline-none"
+                    className="w-full text-xs p-2.5 rounded-xl border border-gray-200 dark:border-[#3B5368] bg-gray-50 dark:bg-[#243B50] text-[#083067] dark:text-white focus:ring-1 focus:ring-blue-500 focus:outline-none font-medium"
                   >
                     {SHIFTS.map((s) => (
-                      <option key={s} value={s} className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">{s}</option>
+                      <option key={s} value={s} className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">{s}</option>
                     ))}
                   </select>
                 </div>
@@ -305,10 +305,10 @@ export default function Staff() {
                 <select
                   value={formData.hostelType}
                   onChange={(e) => setFormData({ ...formData, hostelType: e.target.value })}
-                  className="w-full text-xs p-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#162636] text-[#083067] dark:text-white focus:ring-1 focus:ring-[#083067] focus:outline-none"
+                  className="w-full text-xs p-2.5 rounded-xl border border-gray-200 dark:border-[#3B5368] bg-gray-50 dark:bg-[#243B50] text-[#083067] dark:text-white focus:ring-1 focus:ring-blue-500 focus:outline-none font-medium"
                 >
                   {HOSTEL_TYPES.map((h) => (
-                    <option key={h} value={h} className="bg-white dark:bg-[#162636] text-gray-900 dark:text-white">{h.replace("_", " ")}</option>
+                    <option key={h} value={h} className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">{h.replace("_", " ")}</option>
                   ))}
                 </select>
               </div>

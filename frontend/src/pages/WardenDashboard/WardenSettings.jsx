@@ -121,10 +121,10 @@ export default function WardenSettings() {
                 <select
                   value={profile.hostelType || "BOYS_HOSTEL"}
                   onChange={(e) => setProfile({ ...profile, hostelType: e.target.value })}
-                  className="w-full p-2.5 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-[#0F1F2E] dark:text-white"
+                  className="w-full p-2.5 border border-gray-300 dark:border-[#3B5368] rounded-xl dark:bg-[#243B50] dark:text-white font-medium"
                 >
-                  <option value="BOYS_HOSTEL">Boys Hostel</option>
-                  <option value="GIRLS_HOSTEL">Girls Hostel</option>
+                  <option value="BOYS_HOSTEL" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">Boys Hostel</option>
+                  <option value="GIRLS_HOSTEL" className="bg-white dark:bg-[#243B50] text-gray-900 dark:text-white">Girls Hostel</option>
                 </select>
               </div>
             </div>
