@@ -56,6 +56,7 @@ app.use("/api/preference", require("./routes/preference"));
 app.use("/api/complaint", require("./routes/complaint"));
 app.use("/api/feedback", require("./routes/feedback"));
 app.use("/api/menu", require("./routes/menu"));
+app.use("/api/notification", require("./routes/notification"));
 app.use("/api/warden/notifications", require("./routes/notification"));
 app.use("/api/warden", require("./routes/warden"));
 app.use("/api/email", require("./routes/email"));

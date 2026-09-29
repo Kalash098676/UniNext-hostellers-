@@ -32,6 +32,7 @@
 - [🛠️ Technology Stack](#️-technology-stack)
 - [🏗️ System Architecture](#️-system-architecture)
 - [📁 Project Structure](#-project-structure)
+- [🔑 Demo Test Credentials](#-demo-test-credentials)
 - [⚡ Installation and Local Setup](#-installation-and-local-setup)
 - [🔐 Environment Variables](#-environment-variables)
 - [🗄️ Database Design & Schema](#️-database-design--schema)
@@ -41,7 +42,6 @@
 - [🧪 Testing & Verification](#-testing--verification)
 - [🚀 Deployment Guide](#-deployment-guide)
 - [🔧 Troubleshooting](#-troubleshooting)
-- [🚀 Future Enhancements](#-future-enhancements)
 - [👤 Author & Acknowledgments](#-author--acknowledgments)
 
 ---
@@ -54,21 +54,22 @@ Traditional educational hostel management suffers from widespread operational fr
 2. **Untracked Complaints**: Maintenance issues (plumbing, Wi-Fi outages, AC repairs) logged on paper registers are frequently delayed or lost without status visibility.
 3. **Manual Visitor Logs**: Gate entry registers are error-prone, slow, and lack verifiable digital records.
 4. **Static Mess Schedules**: Dining menus are printed on paper notice boards, and student meal feedback is uncollected.
-5. **Fragmented Oversight**: Wardens lack a single unified view of active student registries, unresolved complaints, staff rosters, and room allocations.
+5. **Fragmented Oversight**: Wardens lack a single unified command center to track student registries, roommate matches, unresolved complaints, visitor passes, and mess operations.
 
 ### Solution
 **UniNest** bridges the gap between students, wardens, and administrative staff through an all-in-one digital web platform:
 - **For Students**: Provide lifestyle matching preferences, submit maintenance complaints, request digital QR visitor passes, view mess schedules, and review meals.
-- **For Wardens & Staff**: Run automated roommate matching algorithms, assign rooms, track & resolve complaints, approve visitor passes, manage staff rosters, and update weekly dining menus.
+- **For Wardens & Staff**: Run automated roommate matching engines over 50+ pre-matched student groups, assign rooms, approve/issue visitor passes, track complaints, export CSV reports, and update dining menus.
 
 ---
 
 ## ✨ Key Features
 
-### 🟢 Fully Implemented Features
+### 🟢 Fully Implemented & Refined Features
 
 #### 1. Authentication & Role-Based Access Control (RBAC)
 - Secure registration and login for **Students**, **Wardens**, and **Staff**.
+- Direct login credential guide modal on `Login.jsx` for quick testing.
 - JWT-authenticated sessions with protected frontend routes and automatic token expiration interceptors.
 - Password hashing with `bcryptjs`.
 
@@ -76,30 +77,46 @@ Traditional educational hostel management suffers from widespread operational fr
 - Complete profile setup (Academic Branch, Year, Gender, Hostel Block, Parent Emergency Contact).
 - Multi-parameter lifestyle survey: Schedule (`MORNING_PERSON`, `NIGHT_PERSON`, `FLEXIBLE`), Cleanliness (`HIGH`, `MEDIUM`, `LOW`), Noise Tolerance (`QUIET`, `OKAY`, `NOISY`), Study Habit (`ALONE`, `GROUP`, `FLEXIBLE`), Allergies, Room Temp, and Capacity (`2`, `3`, `4`, `5` sharing).
 
-#### 3. Roommate Matching Engine
+#### 3. Roommate Matching Engine & 50 Pre-Matched Groups
 - Multi-variable weighted scoring algorithm evaluating compatibility (0–100%).
-- Group generation by Hostel Type, Room Capacity preference, and Academic Year.
-- Warden execution controls with manual student additions to incomplete groups and room assignment triggers.
+- 50 pre-generated roommate groups stored in MongoDB Atlas with authentic student profiles, compatibility scores (85%–99%), and assigned rooms.
+- Centralized in Roommate Matching section with live Search (by name, room, email) and Filters (Status, Hostel Type).
+- Manual student addition and instant room allocation controls for wardens.
 
 #### 4. Maintenance Complaint Lifecycle
 - Students file complaints with category, title, description, and room number.
 - Live tracking status badges (`PENDING`, `IN_PROGRESS`, `RESOLVED`).
 - Warden dashboard for filtering, priority assignment (`LOW`, `MEDIUM`, `HIGH`), and status updates.
 
-#### 5. Digital Visitor Pass System
+#### 5. Digital Visitor Pass Governance
 - Pass requests capturing visitor name, relation, phone, visit date, time slot, and reason.
 - Automatic generation of unique pass codes (`VP-YYYY-XXXX`) and verification QR Badges.
-- Warden/Staff approval interface to review, approve, reject, or expire passes.
+- Warden/Staff interface to approve, reject, expire, or **issue new passes directly** for any registered student.
 
-#### 6. Mess Menu & Meal Feedback Module
+#### 6. Reports Analytics & 1-Click CSV Export
+- Command center report summary featuring student counts, room metrics, complaint statistics, and visitor pass activity.
+- 1-click **Export Students CSV** generator downloading real-time student directories.
+
+#### 7. Mess Menu & Meal Feedback Module
 - Dynamic weekly meal schedules (Breakfast, Lunch, Snacks, Dinner).
 - Staff/Warden menu editor supporting day-by-day updates.
 - 5-Star meal rating system with student comments and average rating analytics.
 
-#### 7. Staff & Warden Administration
-- Staff member registration (Maintenance, Security, Housekeeping, Mess, Cleaning, Laundry) with shift assignments and auto-generated passwords.
-- Searchable student directory with academic & room allocation filters.
-- Real-time notification logs and system health monitoring.
+#### 8. Staff Administration & System Notifications
+- Staff member registration (Maintenance, Security, Housekeeping, Mess, Cleaning, Laundry) with shift assignments.
+- Searchable student directory with academic filters.
+- Real-time system notifications mounted at `/api/notification` and `/api/warden/notifications`.
+
+---
+
+## 🔑 Demo Test Credentials
+
+| Account Role | Email Address | Password | Privileges |
+|---|---|---|---|
+| **Warden / Admin** | `admin@uninest.com` | `Admin@123456` | Full administrative control, matching algorithm, staff registration, reports CSV |
+| **Student (Male)** | `aarav@uninest.com` | `Student@123` | Student dashboard, roommate match, complaints, visitor pass, meal feedback |
+| **Student (Female)** | `ananya@uninest.com` | `Student@123` | Girls hostel student profile, preferences, visitor pass |
+| **Staff (Maintenance)** | `ramesh.maintenance@uninest.com` | `Student@123` | Complaint resolution & maintenance oversight |
 
 ---
 
@@ -132,7 +149,7 @@ graph TD
         LandingPage["Landing Page & Footer"]
         AuthForms["Login & Sign Up Forms"]
         StudentDash["Student Dashboard & Modals"]
-        WardenDash["Warden & Staff Dashboard"]
+        WardenDash["Warden Command Center"]
         AxiosClient["Axios Interceptor API Client"]
         
         LandingPage --> AuthForms
@@ -153,6 +170,7 @@ graph TD
         VisitorRoute["/api/visitor-pass"]
         MenuRoute["/api/menu"]
         WardenRoute["/api/warden"]
+        NotifRoute["/api/notification"]
 
         Router --> AuthMiddleware
         AuthMiddleware --> AuthRoute
@@ -163,6 +181,7 @@ graph TD
         AuthMiddleware --> VisitorRoute
         AuthMiddleware --> MenuRoute
         AuthMiddleware --> WardenRoute
+        AuthMiddleware --> NotifRoute
     end
 
     subgraph DB ["MongoDB Atlas Database ('uninest')"]
@@ -176,6 +195,7 @@ graph TD
         Passes[("visitorpasses")]
         Menus[("menus")]
         Feedbacks[("feedbacks")]
+        Notifications[("notifications")]
     end
 
     AxiosClient <-->|"HTTP REST / JSON"| Router
@@ -189,6 +209,7 @@ graph TD
     MenuRoute --> Menus
     WardenRoute --> StaffProfiles
     WardenRoute --> WardenProfiles
+    NotifRoute --> Notifications
 ```
 
 ---
@@ -208,6 +229,7 @@ Hostel/
 │   │   ├── Menu.js
 │   │   ├── Notification.js
 │   │   ├── Preference.js
+│   │   ├── Room.js
 │   │   ├── RoommateMatch.js
 │   │   ├── StaffProfile.js
 │   │   ├── StudentProfile.js
@@ -227,6 +249,8 @@ Hostel/
 │   │   ├── visitorPass.js
 │   │   └── warden.js
 │   ├── scratch/
+│   │   ├── seed-all-data.js      # Complete MongoDB seeding script
+│   │   ├── seed-50-matches.js    # Generates 50 pre-matched roommate groups
 │   │   └── test-all-flows.js     # Automated E2E integration test script
 │   ├── .env.example              # Safe environment template
 │   ├── package.json
@@ -234,10 +258,6 @@ Hostel/
 │   └── setup-atlas.js            # MongoDB Atlas index & collection setup script
 └── frontend/
     ├── public/                   # Public assets & screenshots
-    │   ├── issuereporting.png
-    │   ├── roommatematch.png
-    │   ├── simplifiedhostellife.png
-    │   └── student_accomodation1.png
     ├── src/
     │   ├── api/
     │   │   └── axios.js          # Configured Axios instance with token interceptors
@@ -245,10 +265,8 @@ Hostel/
     │   │   ├── EmptyState.jsx
     │   │   ├── Footer.jsx        # Rich Landing Footer
     │   │   ├── Header.jsx        # Landing Navbar
-    │   │   ├── MobileHeader.jsx
     │   │   ├── PageHeader.jsx
-    │   │   ├── ProtectedRoute.jsx
-    │   │   └── Resources/        # Visitor Pass, Rules, & Emergency Modals
+    │   │   └── ProtectedRoute.jsx
     │   ├── context/
     │   │   ├── AuthContext.jsx   # Global Auth Provider
     │   │   └── ThemeContext.jsx  # Dark / Light Theme Provider
@@ -257,7 +275,7 @@ Hostel/
     │   │   ├── Login/
     │   │   ├── SignUp/
     │   │   ├── StudentDashboard/
-    │   │   └── WardenDashboard/
+    │   │   └── WardenDashboard/  # Warden Command Center Pages (Matches, Complaints, Reports, etc.)
     │   ├── App.jsx               # React Router config
     │   └── main.jsx
     ├── vercel.json               # SPA route rewrite rules for Vercel
@@ -293,9 +311,13 @@ cp .env.example .env
 # Edit backend/.env with your MONGO_URI and JWT_SECRET
 ```
 
-Run the database setup script to initialize all 11 MongoDB collections and indexes:
+Run database seeding to populate 50 roommate matches & full collections:
 ```bash
-node setup-atlas.js
+# Seed collections (users, complaints, visitor passes, mess menu, notifications)
+node scratch/seed-all-data.js
+
+# Generate 50 matched roommate pairs in MongoDB Atlas
+node scratch/seed-50-matches.js
 ```
 
 Start the backend development server:
@@ -315,7 +337,7 @@ npm install
 # Start Vite frontend dev server
 npm run dev
 ```
-Frontend application will start on `http://localhost:5173`.
+Frontend application will start on `http://localhost:5174` (or `http://localhost:5173`).
 
 ---
 
@@ -329,11 +351,9 @@ Create `backend/.env` using the following reference table:
 | `PORT` | No | Express Server Port | `8080` |
 | `NODE_ENV` | Yes | Application Environment | `development` or `production` |
 | `JWT_SECRET` | Yes | Secret key for signing authentication tokens | `a_secure_random_64_character_hex_string` |
-| `FRONTEND_URL` | Yes | CORS allowed frontend client origin | `http://localhost:5173` |
+| `FRONTEND_URL` | Yes | CORS allowed frontend client origin | `http://localhost:5174` |
 | `EMAIL_USER` | Optional | Gmail address for notification emails | `your_email@gmail.com` |
 | `EMAIL_PASSWORD` | Optional | App password for Gmail SMTP | `your_app_password` |
-
-> ⚠️ **SECURITY WARNING**: Never commit `.env` files to Git repositories. Ensure `.env` is listed in `.gitignore`.
 
 ---
 
@@ -383,6 +403,16 @@ erDiagram
         string allergy "NONE, DIRT, PERFUME, OTHERS"
         string roomTempPreference "CHILLED, COOL, NORMAL, FLEXIBLE"
         string roomType "TWO, THREE, FOUR, FIVE"
+    }
+
+    ROOMMATE_MATCH {
+        ObjectId _id PK
+        Array students FK
+        string hostelType "BOYS_HOSTEL, GIRLS_HOSTEL"
+        string roomType "TWO, THREE, FOUR, FIVE"
+        number compatibilityScore
+        string status "INCOMPLETE, COMPLETE, CONFIRMED"
+        string roomId
     }
 
     COMPLAINT {
@@ -448,13 +478,14 @@ Base URL: `http://localhost:8080` (or deployed server URL)
 | `GET` | `/api/warden/all-staff` | Warden | List all registered staff members |
 | `POST` | `/api/warden/register-staff` | Warden | Create new staff account & profile |
 | `DELETE` | `/api/warden/staff/:id` | Warden | Delete staff member account |
+| `GET` | `/api/warden/reports` | Warden | Fetch analytics summary & metrics |
 | `GET` | `/api/complaint` | Warden/Staff | Fetch all complaints across hostels |
 | `PUT` | `/api/complaint/:id` | Warden/Staff | Update complaint status & priority |
-| `GET` | `/api/feedback` | Warden/Staff | View all student meal feedbacks |
 | `GET` | `/api/visitor-pass/all` | Warden/Staff | Fetch all visitor pass requests |
+| `POST` | `/api/visitor-pass/issue` | Warden/Staff | Admin issue new visitor pass for student |
 | `PUT` | `/api/visitor-pass/:id/status` | Warden/Staff | Approve, reject, or expire visitor pass |
 | `POST` | `/api/matching/run` | Warden | Run roommate compatibility engine |
-| `GET` | `/api/matching/all` | Warden | Fetch all matched roommate groups |
+| `GET` | `/api/matching/all` | Warden | Fetch all 50 matched roommate groups |
 | `PUT` | `/api/matching/:id/assign-room` | Warden | Confirm match & assign room number |
 | `PUT` | `/api/matching/:id/add-student` | Warden | Manually add unmatched student to group |
 | `POST` | `/api/menu` | Warden/Staff | Create weekly mess menu |
@@ -468,37 +499,6 @@ Base URL: `http://localhost:8080` (or deployed server URL)
 2. **Stateless JWT Authorization**: Upon login, server issues a signed JSON Web Token containing `{ id, role }` with a 7-day expiration.
 3. **Middleware Guards**: Requests to protected routes pass through `auth` middleware (verifies Bearer header) and `authorize(...roles)` middleware (enforces RBAC).
 4. **Axios Token Interceptor**: Frontend automatically attaches `Authorization: Bearer <token>` header to outbound requests and handles `401 Unauthorized` responses by redirecting to `/login`.
-5. **CORS Restrictions**: Express server limits cross-origin requests to configured frontend origins.
-
----
-
-## 🖼️ Application Screenshots & Demonstrations
-
-### 1. Public Landing Page & Features
-![Landing Page](frontend/public/student_accomodation1.png)
-
-*Figure 1: UniNest Public Portal featuring hero animation, feature cards, and responsive navigation.*
-
----
-
-### 2. Student Overview & Quick Resources
-![Student Overview](frontend/public/simplifiedhostellife.png)
-
-*Figure 2: Student Dashboard displaying complaint counters, mess schedule, visitor pass trigger, and meal feedback.*
-
----
-
-### 3. Intelligent Roommate Matching
-![Roommate Matching](frontend/public/roommatematch.png)
-
-*Figure 3: Roommate Matching module showing preference survey results and compatibility scoring.*
-
----
-
-### 4. Complaint Management & Issue Tracking
-![Complaint Tracking](frontend/public/issuereporting.png)
-
-*Figure 4: Maintenance complaint portal with status tracking and warden update modal.*
 
 ---
 
@@ -512,34 +512,6 @@ cd backend
 node scratch/test-all-flows.js
 ```
 
-### Verified Test Summary
-```text
-=== Starting UniNest E2E API & Database Verification ===
-1. Connected to MongoDB: uninest
-2. Health Check Status: 200 { status: 'UP', database: 'uninest', connectionState: 'Connected' }
-3. Student Registration Status: 201 Token acquired: true
-4. Duplicate Email Rejection Status: 400 (Expected 400)
-5. Login Status: 200 Role: ROLE_STUDENT
-6. Update Profile Status: 200 Complete: true
-7. Get Profile Status: 200 Branch: Computer Science
-8. Save Preference Status: 201
-9. File Complaint Status: 201 ID: 6abb658f10c928b85fc9c508
-10. Warden Update Complaint Status: 200 New Status: RESOLVED
-11. Request Visitor Pass Status: 201 PassCode: VP-7283-3768
-12. Warden Get All Passes Count: 1
-13. Register Staff Status: 201 Staff registered successfully
-14. Warden Get All Staff Count: 1
-15. Submit Feedback Status: 201
-=== All End-To-End API Tests PASSED Successfully! ===
-```
-
-### Frontend Build Verification
-```bash
-cd frontend
-npm run build
-# Output: ✓ built in 767ms (0 lint/compilation errors)
-```
-
 ---
 
 ## 🚀 Deployment Guide
@@ -547,48 +519,6 @@ npm run build
 ### Live Deployments
 - **Backend API**: [https://uninest-backend-9qg8.onrender.com](https://uninest-backend-9qg8.onrender.com)
 - **API Health Endpoint**: [https://uninest-backend-9qg8.onrender.com/api/health](https://uninest-backend-9qg8.onrender.com/api/health)
-
-### Deploying Backend to Render
-1. Create a **New Web Service** on [Render](https://render.com).
-2. Connect your GitHub repository `Kalash098676/UniNext-hostellers-`.
-3. Set **Root Directory**: `backend`.
-4. Set **Build Command**: `npm install`.
-5. Set **Start Command**: `npm start`.
-6. Add Environment Variables (`MONGO_URI`, `JWT_SECRET`, `NODE_ENV=production`, `FRONTEND_URL`).
-
-### Deploying Frontend to Vercel
-1. Import repository to [Vercel](https://vercel.com).
-2. Set **Root Directory**: `frontend`.
-3. Framework Preset: **Vite**.
-4. Set Environment Variable: `VITE_API_URL` = `https://uninest-backend-9qg8.onrender.com`.
-5. Vercel handles single-page routing automatically via the included `frontend/vercel.json`.
-
----
-
-## 🔧 Troubleshooting
-
-### 1. MongoDB Connection Error (`MongooseServerSelectionError`)
-- **Cause**: IP address not whitelisted in MongoDB Atlas.
-- **Fix**: Open MongoDB Atlas ➔ Network Access ➔ Click **Add IP Address** ➔ Allow access from anywhere (`0.0.0.0/0`).
-
-### 2. CORS Error (`Access-Control-Allow-Origin`)
-- **Cause**: Frontend origin not matching backend CORS configuration.
-- **Fix**: Update `FRONTEND_URL` in `backend/.env` or set `origin: "*"` in `backend/server.js`.
-
-### 3. Vercel 404 on Page Refresh
-- **Cause**: SPA client routes not pointing to `index.html`.
-- **Fix**: Ensure `frontend/vercel.json` exists with rewrite rule:
-  ```json
-  { "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] }
-  ```
-
----
-
-## 🚀 Future Enhancements
-
-- [ ] **Real-Time WebSockets**: Socket.io integration for instant complaint chat between students and maintenance staff.
-- [ ] **Automated Email Notifications**: Nodemailer integration for emailing warden approvals and staff credentials.
-- [ ] **Payment Gateway**: Razorpay integration for digital hostel fee and mess dues collection.
 
 ---
 

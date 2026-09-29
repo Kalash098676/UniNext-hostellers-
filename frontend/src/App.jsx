@@ -8,23 +8,29 @@ import StudentDashboard from "./pages/StudentDashboard/StudentDashboard";
 import WardenDashboard from "./pages/WardenDashboard/WardenDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { ThemeProvider } from "./context/ThemeContext";
+
+// Student pages
 import Overview from "./pages/StudentDashboard/Overview";
 import Complaints from "./pages/StudentDashboard/Complaints";
 import Feedback from "./pages/StudentDashboard/Feedback";
 import Preferences from "./pages/StudentDashboard/Preferences";
 import RoommateMatch from "./pages/StudentDashboard/RoommateMatch";
 import Profile from "./pages/StudentDashboard/Profile";
-import { Menu } from "lucide-react";
-import WardenOverview from "./pages/WardenDashboard/WardenOverview";
-import WardenComplaints from "./pages/WardenDashboard/WardenComplaints";
-import WardenFeedback from "./pages/WardenDashboard/WardenFeedback";
-import WardenProfile from "./pages/WardenDashboard/WardenProfile";
-import Students from "./pages/WardenDashboard/Students";
-import Staff from "./pages/WardenDashboard/Staff";
-import Matches from "./pages/WardenDashboard/Matches";
-import ManageMenu from "./pages/WardenDashboard/ManageMenu";
 
-// #083067
+// Warden / Admin pages
+import WardenOverview from "./pages/WardenDashboard/WardenOverview";
+import Students from "./pages/WardenDashboard/Students";
+import Rooms from "./pages/WardenDashboard/Rooms";
+import Matches from "./pages/WardenDashboard/Matches";
+import WardenComplaints from "./pages/WardenDashboard/WardenComplaints";
+import Staff from "./pages/WardenDashboard/Staff";
+import VisitorPasses from "./pages/WardenDashboard/VisitorPasses";
+import ManageMenu from "./pages/WardenDashboard/ManageMenu";
+import WardenFeedback from "./pages/WardenDashboard/WardenFeedback";
+import WardenNotifications from "./pages/WardenDashboard/WardenNotifications";
+import WardenReports from "./pages/WardenDashboard/WardenReports";
+import WardenSettings from "./pages/WardenDashboard/WardenSettings";
+import WardenProfile from "./pages/WardenDashboard/WardenProfile";
 
 const App = () => {
   return (
@@ -35,6 +41,8 @@ const App = () => {
             <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            
+            {/* Student Dashboard Routes */}
             <Route
               path="/student-dashboard"
               element={
@@ -50,23 +58,29 @@ const App = () => {
               <Route path="roommate" element={<RoommateMatch />} />
               <Route path="profile" element={<Profile />} />
             </Route>
+
+            {/* Admin / Warden Dashboard Routes */}
             <Route
               path="/warden-dashboard"
               element={
-                <ProtectedRoute allowedRoles={["ROLE_WARDEN", "ROLE_STAFF"]}>
+                <ProtectedRoute allowedRoles={["ROLE_WARDEN", "ROLE_ADMIN", "ROLE_STAFF"]}>
                   <WardenDashboard />
                 </ProtectedRoute>
               }
             >
               <Route index element={<WardenOverview />} />
               <Route path="students" element={<Students />} />
-              <Route path="complaints" element={<WardenComplaints />} />
-              <Route path="feedback" element={<WardenFeedback />} />
+              <Route path="rooms" element={<Rooms />} />
               <Route path="matches" element={<Matches />} />
+              <Route path="complaints" element={<WardenComplaints />} />
               <Route path="staff" element={<Staff />} />
-              <Route path="profile" element={<WardenProfile />} />
+              <Route path="visitor-passes" element={<VisitorPasses />} />
               <Route path="menu" element={<ManageMenu />} />
-
+              <Route path="feedback" element={<WardenFeedback />} />
+              <Route path="notifications" element={<WardenNotifications />} />
+              <Route path="reports" element={<WardenReports />} />
+              <Route path="settings" element={<WardenSettings />} />
+              <Route path="profile" element={<WardenProfile />} />
             </Route>
           </Routes>
         </BrowserRouter>

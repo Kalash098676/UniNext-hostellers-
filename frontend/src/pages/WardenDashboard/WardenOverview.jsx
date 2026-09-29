@@ -1,395 +1,220 @@
 import { useState, useEffect } from "react";
-import { useActionData, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import api from "../../api/axios";
 import {
   Users,
   AlertCircle,
   Star,
-  UserCheck,
-  Calendar,
-  Hash,
-  ChevronRight,
+  Bed,
+  ShieldCheck,
+  Plus,
+  UserPlus,
+  Bell,
+  CheckCircle2,
+  TrendingUp,
+  Activity,
 } from "lucide-react";
-import { User } from "lucide-react";
-
-import { useAuth } from "../../context/AuthContext";
 import PageHeader from "../../components/PageHeader";
 
-function StatCard({
-  icon: Icon,
-  iconBg,
-  value,
-  label,
-  badge,
-  badgeColor,
-  sub,
-}) {
+function StatCard({ icon: Icon, iconBg, value, label, sub, badge, badgeColor }) {
   return (
-    <div className="bg-white dark:bg-[#1A2F42] rounded-2xl p-4 lg:p-5 shadow-sm">
+    <div className="bg-white dark:bg-[#1A2F42] rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
       <div className="flex items-start justify-between mb-3">
-        <div
-          className={`w-9 h-9 lg:w-10 lg:h-10 ${iconBg} rounded-xl flex items-center justify-center`}
-        >
-          <Icon className="w-5 h-5 text-[#083067] dark:text-white" />
+        <div className={`w-10 h-10 ${iconBg} rounded-xl flex items-center justify-center`}>
+          <Icon className="w-5 h-5 text-[#1B3C53] dark:text-white" />
         </div>
         {badge && (
-          <span
-            className={`text-[10px] px-2 py-1 rounded-full font-semibold ${badgeColor}`}
-          >
+          <span className={`text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase ${badgeColor}`}>
             {badge}
           </span>
         )}
       </div>
-      <div className="text-xl lg:text-2xl font-bold text-[#083067] dark:text-white mb-0.5">
-        {value}
-      </div>
-      {sub && (
-        <p className="text-[10px] text-blue-400 font-medium mb-0.5">{sub}</p>
-      )}
-      <p className="text-[10px] sm:text-xs text-gray-400">{label}</p>
+      <div className="text-2xl font-bold text-gray-900 dark:text-white mb-0.5">{value}</div>
+      {sub && <p className="text-xs text-blue-500 font-medium mb-0.5">{sub}</p>}
+      <p className="text-xs text-gray-500 dark:text-gray-400">{label}</p>
     </div>
   );
 }
 
-function StatusBadge({ status }) {
-  const map = {
-    PENDING: {
-      label: "Pending",
-      color:
-        "bg-amber-50 text-amber-600 dark:bg-amber-900/40 dark:text-amber-300",
-    },
-    IN_PROGRESS: {
-      label: "In Progress",
-      color: "bg-blue-50 text-blue-600 dark:bg-blue-900/40 dark:text-blue-300",
-    },
-    RESOLVED: {
-      label: "Resolved",
-      color:
-        "bg-emerald-50 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-300",
-    },
-  };
-  const s = map[status] || map.PENDING;
-  return (
-    <span
-      className={`text-[10px] px-2 py-1 rounded-full font-medium ${s.color}`}
-    >
-      • {s.label}
-    </span>
-  );
-}
-
-function PriorityBadge({ priority }) {
-  const map = {
-    HIGH: { label: "HIGH", color: "bg-red-50 text-red-500" },
-    MEDIUM: { label: "MEDIUM", color: "bg-amber-50 text-amber-500" },
-    LOW: { label: "LOW", color: "bg-gray-100 text-gray-500" },
-  };
-  const p = map[priority] || map.LOW;
-  return (
-    <span
-      className={`text-[10px] px-2 py-1 rounded-full font-semibold ${p.color}`}
-    >
-      {p.label}
-    </span>
-  );
-}
-
 export default function WardenOverview() {
-  const { user } = useAuth();
   const navigate = useNavigate();
-  const [stats, setStats] = useState({
-    totalStudents: 0,
-    pendingComplaints: 0,
-    averageRating: 0,
-    newToday: 0,
-    pendingVisitorPasses: 0,
-  });
-  const [complaints, setComplaints] = useState([]);
-  const [students, setStudents] = useState([]);
-  const [visitorPasses, setVisitorPasses] = useState([]);
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadData();
+    fetchDashboardOverview();
   }, []);
 
-  const loadData = async () => {
-    setLoading(true);
+  const fetchDashboardOverview = async () => {
     try {
-      const [studentsRes, complaintsRes, feedbackRes, visitorPassRes] = await Promise.all([
-        api.get("/api/warden/all-students"),
-        api.get("/api/complaint"),
-        api.get("/api/feedback"),
-        api.get("/api/visitor-pass/all").catch(() => ({ data: [] })),
-      ]);
-
-      const studentsData = studentsRes.data;
-      const complaintsData = complaintsRes.data;
-      const feedbackData = feedbackRes.data;
-      const visitorPassData = visitorPassRes.data || [];
-
-      setStudents(studentsData.slice(0, 4));
-      setComplaints(complaintsData.slice(0, 4));
-      setVisitorPasses(visitorPassData);
-
-      const avgRating = feedbackData.length
-        ? (
-            feedbackData.reduce((s, f) => s + f.rating, 0) / feedbackData.length
-          ).toFixed(1)
-        : "0.0";
-
-      const today = new Date().toDateString();
-      const newToday = studentsData.filter(
-        (s) => new Date(s.date).toDateString() === today,
-      ).length;
-
-      setStats({
-        totalStudents: studentsData.length,
-        pendingComplaints: complaintsData.filter((c) => c.status === "PENDING").length,
-        averageRating: avgRating,
-        newToday,
-        pendingVisitorPasses: visitorPassData.filter((vp) => vp.status === "PENDING" || vp.status === "APPROVED").length,
-      });
+      setLoading(true);
+      const res = await api.get("/api/warden/dashboard");
+      setData(res.data);
     } catch (err) {
-      console.error(err);
+      console.error("Error loading dashboard overview:", err);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleUpdatePassStatus = async (passId, newStatus) => {
-    try {
-      await api.put(`/api/visitor-pass/${passId}/status`, { status: newStatus });
-      loadData();
-    } catch (err) {
-      console.error("Failed to update visitor pass status", err);
-    }
-  };
-
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p className="text-[#083067] dark:text-white font-medium">Loading...</p>
+      <div className="flex items-center justify-center min-h-screen text-gray-500">
+        Loading Admin Overview...
       </div>
     );
   }
 
   return (
-    <>
-      <div className="p-4 lg:p-6 bg-[#f8f9ff] dark:bg-[#0F1F2E] min-h-screen">
-        {/* Header */}
-       <PageHeader 
-       title={"Dashboard Overview"}
-       />
+    <div className="p-4 lg:p-6 bg-[#f8f9ff] dark:bg-[#0F1F2E] min-h-screen space-y-6">
+      <PageHeader title="Admin Overview & Command Center" />
 
-        {/* Stat cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <StatCard
-            icon={Users}
-            iconBg="bg-[#d5e3ff] dark:bg-blue-900/20"
-            value={stats.totalStudents}
-            label="Total Students"
-            sub="+2.4%"
-          />
-          <StatCard
-            icon={AlertCircle}
-            iconBg="bg-[#ffddb8] dark:bg-amber-900/20"
-            value={String(stats.pendingComplaints).padStart(2, "0")}
-            label="Pending Complaints"
-            badge="URGENT"
-            badgeColor="bg-red-50 text-red-500"
-          />
-          <StatCard
-            icon={Star}
-            iconBg="bg-[#d5e3ff] dark:bg-purple-900/20"
-            value={`${stats.averageRating} / 5`}
-            label="Avg Feedback Rating"
-          />
-          <StatCard
-            icon={UserCheck}
-            iconBg="bg-[#d5e3ff] dark:bg-green-900/20"
-            value={stats.newToday}
-            label="New Registrations Today"
-          />
+      {/* Quick Action Toolbar */}
+      <div className="bg-white dark:bg-[#1A2F42] p-4 rounded-2xl border border-gray-100 dark:border-gray-700 flex flex-wrap items-center justify-between gap-3 shadow-sm">
+        <span className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Quick Operations</span>
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => navigate("/warden-dashboard/students")}
+            className="flex items-center gap-1.5 bg-[#1B3C53] text-white px-3.5 py-2 rounded-xl text-xs font-semibold hover:bg-[#234C6A] transition shadow-sm"
+          >
+            <Plus className="w-4 h-4" /> Add Student
+          </button>
+          <button
+            onClick={() => navigate("/warden-dashboard/matches")}
+            className="flex items-center gap-1.5 bg-blue-600 text-white px-3.5 py-2 rounded-xl text-xs font-semibold hover:bg-blue-700 transition shadow-sm"
+          >
+            <UserPlus className="w-4 h-4" /> Roommate Matches
+          </button>
+          <button
+            onClick={() => navigate("/warden-dashboard/complaints")}
+            className="flex items-center gap-1.5 bg-amber-600 text-white px-3.5 py-2 rounded-xl text-xs font-semibold hover:bg-amber-700 transition shadow-sm"
+          >
+            <AlertCircle className="w-4 h-4" /> View Complaints
+          </button>
+          <button
+            onClick={() => navigate("/warden-dashboard/notifications")}
+            className="flex items-center gap-1.5 bg-purple-600 text-white px-3.5 py-2 rounded-xl text-xs font-semibold hover:bg-purple-700 transition shadow-sm"
+          >
+            <Bell className="w-4 h-4" /> Send Notification
+          </button>
         </div>
+      </div>
 
-        {/* Bottom grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Recent complaints */}
-          <div className="lg:col-span-2 bg-white dark:bg-[#1A2F42] rounded-2xl shadow-sm p-5">
-            <div className="mb-5">
-              <h2 className="text-lg font-semibold text-[#083067] dark:text-white">
-                Recent Complaint Logs
-              </h2>
-            </div>
+      {/* Metrics Row */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <StatCard
+          icon={Users}
+          iconBg="bg-blue-100 dark:bg-blue-900/30"
+          value={data?.totalStudents || 0}
+          label="Registered Students"
+          sub={`${data?.verifiedStudents || 0} Verified | ${data?.pendingVerification || 0} Pending`}
+        />
+        <StatCard
+          icon={Bed}
+          iconBg="bg-emerald-100 dark:bg-emerald-900/30"
+          value={`${data?.occupancyPercentage || 0}% Occupancy`}
+          label="Room Capacity & Allocation"
+          sub={`${data?.occupiedBeds || 0} Beds Occupied (${data?.availableBeds || 0} Available)`}
+          badge="Live"
+          badgeColor="bg-emerald-100 text-emerald-800"
+        />
+        <StatCard
+          icon={AlertCircle}
+          iconBg="bg-amber-100 dark:bg-amber-900/30"
+          value={data?.pendingComplaints || 0}
+          label="Pending Maintenance Issues"
+          sub={`${data?.urgentComplaints || 0} Urgent High Priority`}
+          badge={data?.pendingComplaints > 0 ? "Needs Action" : "Clean"}
+          badgeColor={data?.pendingComplaints > 0 ? "bg-red-100 text-red-700" : "bg-emerald-100 text-emerald-700"}
+        />
+        <StatCard
+          icon={ShieldCheck}
+          iconBg="bg-purple-100 dark:bg-purple-900/30"
+          value={data?.pendingPasses || 0}
+          label="Pending Visitor Pass Approvals"
+          sub={`Feedback Rating: ${data?.averageRating || 0} / 5⭐`}
+        />
+      </div>
 
-            {/* Desktop */}
-            <div className="hidden lg:block overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="text-gray-500 uppercase text-xs border-b border-gray-100 dark:border-gray-700">
-                    <th className="text-left pb-2 font-medium">Student</th>
-                    <th className="text-left pb-2 font-medium">Title</th>
-                    <th className="text-left pb-2 font-medium">Priority</th>
-                    <th className="text-left pb-2 font-medium">Status</th>
-                  </tr>
-                </thead>
-
-                <tbody className="divide-y divide-gray-50 dark:divide-gray-700">
-                  {complaints.length === 0 ? (
-                    <tr>
-                      <td
-                        colSpan={4}
-                        className="text-center py-6 text-gray-400"
-                      >
-                        No complaints yet
-                      </td>
-                    </tr>
-                  ) : (
-                    complaints.map((c) => (
-                      <tr
-                        key={c._id}
-                        className="hover:bg-gray-50 dark:hover:bg-white/5"
-                      >
-                        <td className="py-4 font-semibold text-[#083067] dark:text-white">
-                          {c.userId?.name || "Student"}
-                        </td>
-
-                        <td className="py-4 text-gray-500 dark:text-gray-400">
-                          {c.title}
-                        </td>
-
-                        <td className="py-4">
-                          <PriorityBadge priority={c.priority} />
-                        </td>
-
-                        <td className="py-4">
-                          <StatusBadge status={c.status} />
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-
-              <button
-                onClick={() => navigate("/warden-dashboard/complaints")}
-                className="w-full mt-5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-sm font-medium text-[#083067] dark:text-white hover:bg-gray-50 dark:hover:bg-white/5"
-              >
-                View All Complaints
-              </button>
-            </div>
-
-            {/* Mobile */}
-            <div className="lg:hidden space-y-3">
-              {complaints.length === 0 ? (
-                <div className="text-center py-6 text-gray-400">
-                  No complaints yet
-                </div>
-              ) : (
-                complaints.map((c) => (
-                  <div
-                    key={c._id}
-                    className="rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-[#162636] p-3"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-[#083067] flex items-center justify-center text-white font-semibold">
-                        {c.userId?.name?.charAt(0).toUpperCase()}
-                      </div>
-
-                      <div>
-                        <p className="text-sm font-semibold text-[#083067] dark:text-white">
-                          {c.userId?.name || "Student"}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-4">
-                      <p className="text-sm font-medium text-[#083067] dark:text-white mt-1">
-                        {c.title}
-                      </p>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-5 mt-5">
-                      <div>
-                        <p className="text-[11px] text-gray-400 uppercase mb-1">
-                          Priority
-                        </p>
-
-                        <PriorityBadge priority={c.priority} />
-                      </div>
-
-                      <div>
-                        <p className="text-[11px] text-gray-400 uppercase mb-1">
-                          Status
-                        </p>
-
-                        <StatusBadge status={c.status} />
-                      </div>
-                    </div>
-                  </div>
-                ))
-              )}
-
-              <button
-                onClick={() => navigate("/warden-dashboard/complaints")}
-                className="w-full py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-sm font-medium text-[#083067] dark:text-white hover:bg-gray-50 dark:hover:bg-white/5"
-              >
-                View All Complaints
-              </button>
-            </div>
+      {/* Activity Feed & Detailed Quick Overview */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Activity Log */}
+        <div className="lg:col-span-2 bg-white dark:bg-[#1A2F42] rounded-2xl shadow-sm p-6 border border-gray-100 dark:border-gray-700 space-y-4">
+          <div className="flex items-center justify-between border-b border-gray-100 dark:border-gray-700 pb-3">
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+              <Activity className="w-5 h-5 text-blue-600" /> Recent System Activity Feed
+            </h3>
+            <span className="text-xs text-gray-400">Live Real-Time Log</span>
           </div>
 
-          {/* New registrations */}
-          <div className="bg-white dark:bg-[#1A2F42] rounded-2xl shadow-sm p-5">
-            <div className="flex items-center justify-between mb-4">
-           <h2 className="text-lg font-semibold text-[#083067] dark:text-white">
-                New Registrations
-              </h2>
-            </div>
-
+          {!data?.activityFeed || data.activityFeed.length === 0 ? (
+            <p className="text-sm text-gray-400 italic py-6 text-center">No recent activity logged.</p>
+          ) : (
             <div className="space-y-3">
-              {students.length === 0 ? (
-                <p className="text-[9px] sm:text-xs text-gray-400 text-center py-4">
-                  No students yet
-                </p>
-              ) : (
-                students.map((s) => (
-                  <div
-                    key={s.id}
-                 className="flex items-center gap-3 p-4 hover:bg-gray-50 dark:hover:bg-white/5 rounded-xl transition-colors cursor-pointer"
-                    onClick={() => navigate("/warden-dashboard/students")}
-                  >
-                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-[#083067] flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
-                      {s.name?.charAt(0).toUpperCase()}
+              {data.activityFeed.map((act) => (
+                <div key={act.id} className="p-3.5 rounded-xl bg-gray-50 dark:bg-[#0F1F2E] border border-gray-100 dark:border-gray-700 flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300">
+                        {act.type}
+                      </span>
+                      <span className="text-xs font-semibold text-gray-900 dark:text-white">{act.title}</span>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-[#083067] dark:text-white truncate">
-                        {s.name}
-                      </p>
-                      <p className="text-xs text-gray-400">
-                        {s.room !== "Not Assigned"
-                          ? `Room ${s.room}`
-                          : "Room not assigned"}
-                      </p>
-                    </div>
-                    <span className="hidden sm:block text-[10px] text-gray-300 flex-shrink-0">
-                      {s.date}
-                    </span>
+                    <p className="text-[11px] text-gray-400">{new Date(act.time).toLocaleString()}</p>
                   </div>
-                ))
-              )}
+                  <span className="text-xs font-medium text-gray-500 bg-white dark:bg-gray-800 px-2 py-1 rounded-md border border-gray-200 dark:border-gray-700">
+                    {act.badge}
+                  </span>
+                </div>
+              ))}
             </div>
+          )}
+        </div>
 
+        {/* Quick Navigation Cards */}
+        <div className="bg-white dark:bg-[#1A2F42] rounded-2xl shadow-sm p-6 border border-gray-100 dark:border-gray-700 space-y-4">
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-700 pb-3">
+            Admin Modules Shortcut
+          </h3>
+          <div className="space-y-2.5 text-xs font-semibold">
             <button
               onClick={() => navigate("/warden-dashboard/students")}
-              className="w-full mt-5 py-2.5 text-sm font-medium text-[#083067] dark:text-white border border-gray-100 dark:border-gray-700 rounded-xl hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+              className="w-full text-left p-3 rounded-xl bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-200 hover:bg-blue-100 transition flex justify-between items-center"
             >
-              All New Students
+              <span>Manage Registered Students</span>
+              <span>→</span>
+            </button>
+            <button
+              onClick={() => navigate("/warden-dashboard/rooms")}
+              className="w-full text-left p-3 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 text-emerald-800 dark:text-emerald-200 hover:bg-emerald-100 transition flex justify-between items-center"
+            >
+              <span>Room Inventory & Occupancy</span>
+              <span>→</span>
+            </button>
+            <button
+              onClick={() => navigate("/warden-dashboard/matches")}
+              className="w-full text-left p-3 rounded-xl bg-purple-50 dark:bg-purple-900/20 text-purple-800 dark:text-purple-200 hover:bg-purple-100 transition flex justify-between items-center"
+            >
+              <span>Roommate Matching Engine</span>
+              <span>→</span>
+            </button>
+            <button
+              onClick={() => navigate("/warden-dashboard/visitor-passes")}
+              className="w-full text-left p-3 rounded-xl bg-amber-50 dark:bg-amber-900/20 text-amber-800 dark:text-amber-200 hover:bg-amber-100 transition flex justify-between items-center"
+            >
+              <span>Visitor Entry Passes</span>
+              <span>→</span>
+            </button>
+            <button
+              onClick={() => navigate("/warden-dashboard/reports")}
+              className="w-full text-left p-3 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 transition flex justify-between items-center"
+            >
+              <span>Reports & CSV Data Exports</span>
+              <span>→</span>
             </button>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

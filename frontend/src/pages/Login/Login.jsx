@@ -67,9 +67,24 @@ const Login = () => {
           <h1 className="text-2xl font-bold text-gray-900 mb-1">
             Welcome back
           </h1>
-          <p className="text-gray-500 text-sm mb-8">
+          <p className="text-gray-500 text-sm mb-4">
             Log in to access your hostel dashboard
           </p>
+
+          {/* Admin / Student Credentials Info Note */}
+          <div className="mb-6 p-3.5 rounded-xl bg-blue-50 border border-blue-100 text-xs text-blue-900 space-y-1.5">
+            <p className="font-semibold flex items-center gap-1.5 text-[#1B3C53]">
+              💡 <span>Login & Testing Credentials:</span>
+            </p>
+            <p className="leading-relaxed">
+              • <strong>Admin / Warden:</strong> Log in with email{" "}
+              <code className="bg-white px-1.5 py-0.5 rounded font-mono text-blue-700 border border-blue-200">admin@uninest.com</code> and password{" "}
+              <code className="bg-white px-1.5 py-0.5 rounded font-mono text-blue-700 border border-blue-200">Admin@123456</code>
+            </p>
+            <p className="leading-relaxed">
+              • <strong>Student:</strong> Log in using the email and password you created during Sign Up.
+            </p>
+          </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
