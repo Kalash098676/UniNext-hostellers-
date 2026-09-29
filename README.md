@@ -129,11 +129,11 @@ UniNest follows a clean **Client-Server Architecture**:
 ```mermaid
 graph TD
     subgraph Client ["Frontend (React 19 + Vite)"]
-        LandingPage[Landing Page & Footer]
-        AuthForms[Login & Sign Up Forms]
-        StudentDash[Student Dashboard & Modals]
-        WardenDash[Warden & Staff Dashboard]
-        AxiosClient[Axios Interceptor API Client]
+        LandingPage["Landing Page & Footer"]
+        AuthForms["Login & Sign Up Forms"]
+        StudentDash["Student Dashboard & Modals"]
+        WardenDash["Warden & Staff Dashboard"]
+        AxiosClient["Axios Interceptor API Client"]
         
         LandingPage --> AuthForms
         AuthForms --> AxiosClient
@@ -142,17 +142,17 @@ graph TD
     end
 
     subgraph Server ["Backend Server (Node.js + Express.js)"]
-        Router[Express Route Prefix /api]
-        AuthMiddleware[JWT & Role Authorization Middleware]
-        AuthRoute[/api/auth]
-        StudentRoute[/api/student]
-        PrefRoute[/api/preference]
-        ComplaintRoute[/api/complaint]
-        MatchRoute[/api/matching]
-        VisitorRoute[/api/visitor-pass]
-        MenuRoute[/api/menu]
-        WardenRoute[/api/warden]
-        HealthRoute[/api/health]
+        Router["Express Route Prefix /api"]
+        AuthMiddleware["JWT & Role Authorization Middleware"]
+        AuthRoute["/api/auth"]
+        StudentRoute["/api/student"]
+        PrefRoute["/api/preference"]
+        ComplaintRoute["/api/complaint"]
+        MatchRoute["/api/matching"]
+        VisitorRoute["/api/visitor-pass"]
+        MenuRoute["/api/menu"]
+        WardenRoute["/api/warden"]
+        HealthRoute["/api/health"]
 
         Router --> AuthMiddleware
         AuthMiddleware --> AuthRoute
@@ -167,22 +167,22 @@ graph TD
     end
 
     subgraph Database ["MongoDB Atlas Database ('uninest')"]
-        Users[(users)]
-        StudentProfiles[(studentprofiles)]
-        WardenProfiles[(wardenprofiles)]
-        StaffProfiles[(staffprofiles)]
-        Complaints[(complaints)]
-        Preferences[(preferences)]
-        Matches[(roommatematches)]
-        Passes[(visitorpasses)]
-        Menus[(menus)]
-        Feedbacks[(feedbacks)]
-        Notifications[(notifications)]
+        Users[("users")]
+        StudentProfiles[("studentprofiles")]
+        WardenProfiles[("wardenprofiles")]
+        StaffProfiles[("staffprofiles")]
+        Complaints[("complaints")]
+        Preferences[("preferences")]
+        Matches[("roommatematches")]
+        Passes[("visitorpasses")]
+        Menus[("menus")]
+        Feedbacks[("feedbacks")]
+        Notifications[("notifications")]
 
         Server --> Database
     end
 
-    AxiosClient <== HTTP REST / JSON ==> Router
+    AxiosClient <-->|"HTTP REST / JSON"| Router
 ```
 
 ---
@@ -352,7 +352,7 @@ erDiagram
         string email UK
         string password
         string contactNo
-        string role "ROLE_STUDENT | ROLE_WARDEN | ROLE_STAFF"
+        string role "ROLE_STUDENT, ROLE_WARDEN, ROLE_STAFF"
     }
 
     STUDENT_PROFILE {
@@ -360,8 +360,8 @@ erDiagram
         ObjectId userId FK
         string branch
         number year
-        string gender "MALE | FEMALE | OTHER"
-        string hostelType "BOYS_HOSTEL | GIRLS_HOSTEL"
+        string gender "MALE, FEMALE, OTHER"
+        string hostelType "BOYS_HOSTEL, GIRLS_HOSTEL"
         string roomId
         string parentContactNo
         boolean profileComplete
@@ -370,13 +370,13 @@ erDiagram
     PREFERENCE {
         ObjectId _id PK
         ObjectId userId FK
-        string scheduleType "MORNING_PERSON | NIGHT_PERSON | FLEXIBLE"
-        string cleanlinessLevel "HIGH | MEDIUM | LOW"
-        string noisePreference "QUIET | OKAY | NOISY"
-        string studyPreference "ALONE | GROUP | FLEXIBLE"
-        string allergy "NONE | DIRT | PERFUME | OTHERS"
-        string roomTempPreference "CHILLED | COOL | NORMAL | FLEXIBLE"
-        string roomType "TWO | THREE | FOUR | FIVE"
+        string scheduleType "MORNING_PERSON, NIGHT_PERSON, FLEXIBLE"
+        string cleanlinessLevel "HIGH, MEDIUM, LOW"
+        string noisePreference "QUIET, OKAY, NOISY"
+        string studyPreference "ALONE, GROUP, FLEXIBLE"
+        string allergy "NONE, DIRT, PERFUME, OTHERS"
+        string roomTempPreference "CHILLED, COOL, NORMAL, FLEXIBLE"
+        string roomType "TWO, THREE, FOUR, FIVE"
     }
 
     COMPLAINT {
@@ -385,8 +385,8 @@ erDiagram
         string title
         string description
         string roomId
-        string status "PENDING | IN_PROGRESS | RESOLVED"
-        string priority "LOW | MEDIUM | HIGH"
+        string status "PENDING, IN_PROGRESS, RESOLVED"
+        string priority "LOW, MEDIUM, HIGH"
     }
 
     VISITOR_PASS {
@@ -399,7 +399,7 @@ erDiagram
         string visitTime
         string reason
         string passCode UK
-        string status "APPROVED | PENDING | REJECTED | EXPIRED"
+        string status "APPROVED, PENDING, REJECTED, EXPIRED"
     }
 ```
 
