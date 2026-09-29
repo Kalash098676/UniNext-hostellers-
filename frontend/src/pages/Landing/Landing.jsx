@@ -94,6 +94,70 @@ export default function Landing() {
           </div>
         </div>
       </section>
+
+      {/* About Section */}
+      <section id="about" className="py-16 md:py-24 bg-white border-t border-gray-200">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-12 md:mb-16">
+            <span className="text-xs md:text-sm font-semibold tracking-wider text-[#1B3C53] uppercase bg-blue-50 px-4 py-1.5 rounded-full border border-blue-100">
+              About UniNest
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-4 mb-4">
+              Modernizing Campus Living & Hostel Governance
+            </h2>
+            <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              UniNest is a comprehensive, production-grade Smart Hostel Management platform designed to eliminate administrative bottlenecks, resolve student-roommate conflicts, and deliver transparent 24/7 digital operations across campus residences.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <div className="p-8 rounded-2xl bg-gray-50 border border-gray-200 hover:border-[#1B3C53]/30 hover:shadow-lg transition-all duration-300">
+              <div className="w-12 h-12 rounded-xl bg-blue-100 text-[#1B3C53] flex items-center justify-center font-bold text-2xl mb-6">
+                🎯
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Our Mission</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                To create a secure, harmonized, and digitally transparent hostel environment where students focus on academics while wardens and staff manage operations effortlessly.
+              </p>
+            </div>
+
+            <div className="p-8 rounded-2xl bg-gray-50 border border-gray-200 hover:border-[#1B3C53]/30 hover:shadow-lg transition-all duration-300">
+              <div className="w-12 h-12 rounded-xl bg-blue-100 text-[#1B3C53] flex items-center justify-center font-bold text-2xl mb-6">
+                🤝
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Smart Roommate Matching</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Empowered by a multi-factor matching engine that evaluates lifestyle, study habits, sleep schedules, and cleanliness levels to ensure long-term room harmony.
+              </p>
+            </div>
+
+            <div className="p-8 rounded-2xl bg-gray-50 border border-gray-200 hover:border-[#1B3C53]/30 hover:shadow-lg transition-all duration-300">
+              <div className="w-12 h-12 rounded-xl bg-blue-100 text-[#1B3C53] flex items-center justify-center font-bold text-2xl mb-6">
+                ⚡
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Seamless Administration</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Automated maintenance complaint tracking, instant digital visitor entry passes, mess menu scheduling, and student feedback analytics under one unified roof.
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-[#1B3C53] text-white rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl">
+            <div className="space-y-3 text-center md:text-left">
+              <h3 className="text-2xl md:text-3xl font-bold">Ready to transform your hostel experience?</h3>
+              <p className="text-blue-100 text-sm md:text-base max-w-xl">
+                Join students, wardens, and staff currently using UniNest for streamlined room allocation, gate passes, and issue resolution.
+              </p>
+            </div>
+            <a
+              href="/signup"
+              className="bg-white text-[#1B3C53] font-bold px-8 py-3.5 rounded-xl hover:bg-blue-50 transition-all duration-200 shadow-md shrink-0"
+            >
+              Get Started Now
+            </a>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );
