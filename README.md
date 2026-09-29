@@ -142,8 +142,9 @@ graph TD
     end
 
     subgraph Server ["Backend Server (Node.js + Express.js)"]
-        Router["Express Route Prefix /api"]
-        AuthMiddleware["JWT & Role Authorization Middleware"]
+        Router["Express Router (/api)"]
+        AuthMiddleware["JWT & RBAC Middleware"]
+        
         AuthRoute["/api/auth"]
         StudentRoute["/api/student"]
         PrefRoute["/api/preference"]
@@ -152,7 +153,6 @@ graph TD
         VisitorRoute["/api/visitor-pass"]
         MenuRoute["/api/menu"]
         WardenRoute["/api/warden"]
-        HealthRoute["/api/health"]
 
         Router --> AuthMiddleware
         AuthMiddleware --> AuthRoute
@@ -163,10 +163,9 @@ graph TD
         AuthMiddleware --> VisitorRoute
         AuthMiddleware --> MenuRoute
         AuthMiddleware --> WardenRoute
-        AuthMiddleware --> HealthRoute
     end
 
-    subgraph Database ["MongoDB Atlas Database ('uninest')"]
+    subgraph DB ["MongoDB Atlas Database ('uninest')"]
         Users[("users")]
         StudentProfiles[("studentprofiles")]
         WardenProfiles[("wardenprofiles")]
@@ -177,12 +176,19 @@ graph TD
         Passes[("visitorpasses")]
         Menus[("menus")]
         Feedbacks[("feedbacks")]
-        Notifications[("notifications")]
-
-        Server --> Database
     end
 
     AxiosClient <-->|"HTTP REST / JSON"| Router
+
+    AuthRoute --> Users
+    StudentRoute --> StudentProfiles
+    PrefRoute --> Preferences
+    ComplaintRoute --> Complaints
+    MatchRoute --> Matches
+    VisitorRoute --> Passes
+    MenuRoute --> Menus
+    WardenRoute --> StaffProfiles
+    WardenRoute --> WardenProfiles
 ```
 
 ---
